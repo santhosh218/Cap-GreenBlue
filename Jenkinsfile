@@ -11,7 +11,7 @@ pipeline {
 		stage('Build Blue Docker Image') {
 			steps {
 				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
-					sh "./Blue/run_docker.sh"
+					sh "docker build --tag=udacitybluecap ./Blue/"
 				}
 			}
 		}
@@ -19,7 +19,9 @@ pipeline {
 		stage('Push Blue Image To Dockerhub') {
 			steps {
 				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
-					sh './Blue/upload_docker.sh'
+					sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+					sh 'docker tag udacitybluecap nakotisanthosh/udacitybluecap'
+					sh 'docker push nakotisanthosh/udacitybluecap'
 				}
 			}
 		}
@@ -69,7 +71,7 @@ pipeline {
 		stage('Build Green Docker Image') {
 			steps {
 				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
-					sh "./Green/run_docker.sh"
+					sh "docker build --tag=udacitybluecap ./Green/"
 				}
 			}
 		}
@@ -77,7 +79,9 @@ pipeline {
 		stage('Push Green Image To Dockerhub') {
 			steps {
 				withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
-					sh './Green/upload_docker.sh'
+					sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+					sh 'docker tag udacitygreencap nakotisanthosh/udacitygreencap'
+					sh 'docker push nakotisanthosh/udacitygreencap'
 				}
 			}
 		}
