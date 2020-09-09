@@ -2,15 +2,15 @@
    "kind":"Service",
    "apiVersion":"v1",
    "metadata":{
-      "name":"bluegreenlb",
+      "name":"bluelb",
       "labels":{
-         "app":"bluegreenlb"
+         "app":"bluelb"
       }
    },
    "spec":{
       "ports": [
          {
-           "port":8000,
+           "port":8001,
            "targetPort":80
          }
       ],
